@@ -1,6 +1,5 @@
 import { Command, CommandRunner } from 'nest-commander';
-import {CandidateCommand} from "./CandidateCommand";
-
+import { CandidateCommand } from './CandidateCommand';
 
 @Command({
   name: 'api',
@@ -10,7 +9,6 @@ import {CandidateCommand} from "./CandidateCommand";
 })
 export class ApiCommand extends CommandRunner {
   run(passedParams: string[], options?: Record<string, any>): Promise<void> {
-    this.command.help()
+    this.command.help();
   }
-
 }
