@@ -1,10 +1,13 @@
 import { Module } from '@nestjs/common';
-import { AppController } from './app.controller';
-import { AppService } from './app.service';
+import { MinterApiService } from './services/minter-api/minter-api.service';
+import { ApiCommand } from "./commands/api/ApiCommand";
 
 @Module({
   imports: [],
-  controllers: [AppController],
-  providers: [AppService],
+  controllers: [],
+  providers: [
+      MinterApiService,
+      ...ApiCommand.registerWithSubCommands()
+  ],
 })
 export class AppModule {}
