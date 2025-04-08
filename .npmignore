@@ -1,0 +1,8 @@
+.yarn
+bin
+docs/api
+src
+test
+.idea
+config.yml
+.env
