@@ -1,0 +1,6 @@
+minter:
+  urlapi: 'http://minter-api:8843/v2'
+  grpc: false
+#  grpc_hostname: minter-grpc
+  grpc_port: 8842
+#  grpc_deadline: 120000

@@ -4,7 +4,7 @@ import { CandidateCommand } from './CandidateCommand';
 @Command({
   name: 'api',
   subCommands: [CandidateCommand],
-  description: 'Api for Minter Node v2',
+  description: 'Api v2 for Minter Node',
   // options: { isDefault: true }
 })
 export class ApiCommand extends CommandRunner {
