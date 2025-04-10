@@ -6,7 +6,7 @@
   "private": false,
   "license": "Apache-2.0",
   "bin": {
-    "minter-cli": "./dist/index.js"
+    "minter-cli": "./dist/main.js"
   },
   "repository": {
     "type": "git",
