@@ -2,6 +2,9 @@ import {Option, CommandRunner, SubCommand} from 'nest-commander';
 import {MinterApiService} from '../../services/minter-api/minter-api.service';
 import {JsonPatches} from "../../utils/JsonPatches";
 
+import {search} from 'jmespath'
+// import * as jmespath from 'jmespath'
+
 @SubCommand({
     name: 'candidate',
     arguments: '<public_key>',
@@ -28,7 +31,8 @@ export class CandidateCommand extends CommandRunner {
                 if (options.patches) {
                     new JsonPatches().printPropertyNames(result)
                 } else if (options.patch && options.patch.length > 0) {
-                    out=result[options.patch]
+                    // out=result[options.patch]
+                    out=search(result,options.patch)
                 } else {
                     out=result
                 }
@@ -41,8 +45,6 @@ export class CandidateCommand extends CommandRunner {
             .catch(console.log);
         return Promise.resolve(undefined);
     }
-
-
 
     @Option({
         flags: '--height [number]',
@@ -75,7 +77,7 @@ export class CandidateCommand extends CommandRunner {
 
     @Option({
         flags: '-p, --patch [string]',
-        description: 'path to config file',
+        description: 'path JMESPath format',
         // defaultValue: 'status',
     })
     parsePatch(val: string): string {
