@@ -11,7 +11,7 @@ describe('VersionCommand', () => {
 
     beforeAll(async () => {
         commandInstance = await CommandTestFactory.createTestingCommand({
-            imports: [AppModule],
+            imports: [],
             providers: [VersionCommand],
         }).compile();
         // command = commandInstance.get(VersionCommand);
