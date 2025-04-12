@@ -14,7 +14,6 @@ export class ConfigYamlLoader {
     } catch (e) {
       console.error(`Error load yaml file ${yamlFile}`);
       console.error(e);
-      // throw new Error('Error load config');
       return null;
     }
   }

@@ -9,7 +9,6 @@ import {JsonPatches} from "../../utils/JsonPatches";
     description: 'Candidate returns candidate’s info by provided public key',
 })
 export class CandidateCommand extends CommandRunner {
-    // private minterApi: MinterApiService;
 
     constructor() {
         super();
@@ -23,15 +22,12 @@ export class CandidateCommand extends CommandRunner {
         const candidate = inputs[0];
         const minterApi = new MinterApiService(options.config);
 
-        // this.minterApi.candidate(candidate, options.not_show_stakes, options.height);
         minterApi.api().getCandidateGrpc(candidate, options.not_show_stakes, options.height).then((r) => {
                 const result = r.toObject()
             let out: any;
                 if (options.patches) {
                     new JsonPatches().printPropertyNames(result)
                 } else if (options.patch && options.patch.length > 0) {
-                    // console.log(options.patch)
-                    const param = "status";
                     out=result[options.patch]
                 } else {
                     out=result
@@ -73,7 +69,7 @@ export class CandidateCommand extends CommandRunner {
         description: 'path to config file',
         defaultValue: 'config.yml',
     })
-    parseString(val: string): string {
+    parseConfig(val: string): string {
         return val;
     }
 

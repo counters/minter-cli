@@ -1,5 +1,5 @@
 import {CommandRunner, SubCommand} from 'nest-commander';
-import {generateWallet, Wallet} from 'minterjs-wallet';
+import {generateWallet, Wallet} from 'minterjs-wallet';//walletFromMnemonicAsync
 
 @SubCommand({
     name: "generate",
@@ -11,6 +11,7 @@ export class WalletGenerateCommand extends CommandRunner {
         const wallet : Wallet = generateWallet();
         console.log(wallet.getAddressString());
         console.log(wallet.getMnemonic());
+        console.log(wallet.getPrivateKeyString());
         // process.stdout.write(`minter-cli version ${version}`);
         return Promise.resolve(undefined);
     }

@@ -3,6 +3,8 @@ import YamlMinter from './YamlMinter';
 import MinterType from './MinterType';
 import { ConfigConst } from '../ConfigConst';
 import { ConfigYamlLoader } from '../ConfigYamlLoader';
+import WalletType from "./WalletType";
+import YamlWallet from "./YamlWallet";
 
 @Injectable()
 export class ConfigMinterService extends ConfigYamlLoader {
@@ -29,5 +31,8 @@ export class ConfigMinterService extends ConfigYamlLoader {
 
   minter(path: string = ConfigConst.MINTER_PATCH): MinterType {
       return YamlMinter(this.yamlContent[path]);
+  }
+  wallet(path: string = ConfigConst.WALLET_PATCH): WalletType {
+      return YamlWallet(this.yamlContent[path]);
   }
 }
