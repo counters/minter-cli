@@ -1,5 +1,5 @@
-import {CommandRunner, Option, SubCommand} from 'nest-commander';
-import {Minter, MinterApi, postTx, prepareSignedTx, TX_TYPE, FEE_PRECISION_SETTING} from "minter-js-sdk";
+import {CommandRunner, InquirerService, Option, SubCommand} from 'nest-commander';
+import {Minter, postTx, prepareSignedTx, TX_TYPE, FEE_PRECISION_SETTING} from "minter-js-sdk";
 import {
     getPrivateKeyFromSeedPhraseAsync,
     getPrivateKeyFromSeedPhrase,
@@ -8,6 +8,7 @@ import {
 import {ConfigMinterService} from "../../services/config/minter/config-minter.service";
 import {parseNumber} from "../../utils/parseNumber";
 import {Wallet} from "../../utils/Wallet";
+import {CANCEL_MESSAGE, ConfirmQuestion} from "../../questions/ConfirmQuestion";
 
 
 @SubCommand({
@@ -18,6 +19,11 @@ import {Wallet} from "../../utils/Wallet";
 })
 export class WalletSendCommand extends CommandRunner {
     private minter: Minter;
+    private interactive = true;
+
+    constructor(private readonly inquirer: InquirerService) {
+        super();
+    }
 
     async run(
         passedParams: string[],
@@ -27,20 +33,28 @@ export class WalletSendCommand extends CommandRunner {
         const [recipient, _amount, symbol] = passedParams;
         const amount = parseNumber(_amount);
 
-        // console.log(options.no_interactive)
-        // console.log(recipient, _amount, amount, symbol)
-
         const extConfig = new ConfigMinterService(options.config);
         const confWallet = extConfig.wallet()
 
         const wallet = new Wallet(confWallet)
-        // console.log(`Sending from ${wallet.getAddressString()} to address ${recipient}`);
+
+        if (this.interactive) {
+            console.log(`Sending ${amount} ${symbol} from ${wallet.getAddressString()} to ${recipient}`);
+            const confirm = (await this.inquirer.ask<{ confirm: boolean }>(
+                'confirm-question',
+                undefined
+            )).confirm;
+            if (!confirm) {
+                console.warn(CANCEL_MESSAGE);
+                return Promise.resolve(undefined);
+            }
+        }
 
         this.minter = new Minter({apiType: 'node', baseURL: extConfig.minter().urlapi});
         // console.log(getBaseCoinSymbol(confWallet.chain_id));
 
-        if ( !options.no_interactive) throw new Error("No interactive not implemented!")
-        await this.send(recipient, amount, symbol, '0x'+wallet.getPrivateKey(), confWallet.chain_id).then(r => {
+        // if ( !options.no_interactive) throw new Error("No interactive not implemented!")
+        await this.send(recipient, amount, symbol, '0x' + wallet.getPrivateKey(), confWallet.chain_id).then(r => {
                 console.log(r);
             }
         ).catch(e => {
@@ -70,14 +84,24 @@ export class WalletSendCommand extends CommandRunner {
     }
 
     @Option({
-        flags: '-y, --no-interactive [boolean]',
+        flags: '-y, --no-interactive',
         name: 'no_interactive',
-        description: 'No Interactive',
-        defaultValue: true,
+        description: 'Skip confirmation prompt and input',
+        defaultValue: false,
     })
     parseNoInteractive(val: string): boolean {
+        this.interactive = false;
         return JSON.parse(val);
     }
+
+    /*    @Option({
+            flags: '--force [boolean]',
+            name: 'force',
+            description: 'force',
+        })
+        parseForce(val: string): boolean {
+            return JSON.parse(val);
+        }*/
 
     async send(to: string, amount: number, coinId: number | string, privateKey: string, chain_id: number = 2): Promise<string> {
         return new Promise<string>((resolve, reject) => {
@@ -96,7 +120,7 @@ export class WalletSendCommand extends CommandRunner {
                     resolve(txHash.hash)
                 })
                 .catch((error) => {
-                    const errorMsg = error.response?.data?.error??error.response??error;
+                    const errorMsg = error.response?.data?.error ?? error.response ?? error;
                     // console.error(errorMsg);
                     reject(errorMsg);
                 });
