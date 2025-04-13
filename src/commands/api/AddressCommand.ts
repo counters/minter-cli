@@ -3,12 +3,12 @@ import { MinterApiService } from '../../services/minter-api/minter-api.service';
 import { ContentExporter } from '../../services/ContentExporter';
 
 @SubCommand({
-  name: 'candidate',
-  arguments: '<public_key>',
-  argsDescription: { public_key: 'Public key' },
-  description: 'Candidate returns candidate’s info by provided public key',
+  name: 'address',
+  arguments: '<address>',
+  argsDescription: { public_key: 'address: Mx...' },
+  description: 'Address returns coins list, balance and transaction count of an address',
 })
-export class CandidateCommand extends CommandRunner {
+export class AddressCommand extends CommandRunner {
   private skipPip2Bip = false;
 
   constructor(private contentExporter: ContentExporter) {
@@ -19,7 +19,7 @@ export class CandidateCommand extends CommandRunner {
     inputs: string[],
     options: {
       height?: number;
-      not_show_stakes?: boolean;
+        delegated?: boolean;
       config: string;
       patch?: string;
       patches: boolean;
@@ -32,7 +32,7 @@ export class CandidateCommand extends CommandRunner {
 
     minterApi
       .api()
-      .getCandidateGrpc(candidate, options.not_show_stakes, options.height)
+      .getAddressGrpc(candidate, options.delegated, options.height)
       .then((r) => {
         const result = r.toObject();
         this.contentExporter.print(result, this.skipPip2Bip, options);
@@ -52,10 +52,10 @@ export class CandidateCommand extends CommandRunner {
   }
 
   @Option({
-    flags: '--not_show_stakes [boolean]',
+    flags: '-d, --delegated [boolean]',
     description:
-      'Do not display a list of steaks. Note: used_slots, uniq_users, min_stake will be filled',
-    defaultValue: true,
+      'delegated',
+    defaultValue: false,
   })
   parseBoolean(val: string): boolean {
     return JSON.parse(val);
