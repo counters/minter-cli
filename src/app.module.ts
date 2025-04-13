@@ -4,6 +4,8 @@ import {VersionCommand} from "./commands/VersionCommand";
 import {WalletCommand} from "./commands/wallet/WalletCommand";
 import {ConfigModule} from "@nestjs/config";
 import {ConfirmQuestion} from "./questions/ConfirmQuestion";
+import {ContentExporter} from "./services/ContentExporter";
+import {MagicPipConvert} from "./questions/MagicPipConvert";
 
 @Module({
     imports: [ConfigModule.forRoot()],
@@ -13,6 +15,8 @@ import {ConfirmQuestion} from "./questions/ConfirmQuestion";
         ...ApiCommand.registerWithSubCommands(),
         ...WalletCommand.registerWithSubCommands(),
         ConfirmQuestion,
+        ContentExporter,
+        MagicPipConvert,
     ],
 })
 export class AppModule {

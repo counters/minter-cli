@@ -2,7 +2,7 @@ export class JsonPatches {
 
     printPropertyNames(obj: any, prefix = ""): void {
         this.propertyNames(obj, prefix).forEach((propertyName) => {
-            console.log(propertyName);
+            console.info(propertyName);
         })
     }
 

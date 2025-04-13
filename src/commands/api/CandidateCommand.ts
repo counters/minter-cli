@@ -1,11 +1,6 @@
 import {Option, CommandRunner, SubCommand} from 'nest-commander';
 import {MinterApiService} from '../../services/minter-api/minter-api.service';
-import {JsonPatches} from "../../utils/JsonPatches";
-
-import {search} from 'jmespath'
-import {MagicPipConvert} from "../../questions/MagicPipConvert";
-
-// import * as jmespath from 'jmespath'
+import {ContentExporter} from "../../services/ContentExporter";
 
 @SubCommand({
     name: 'candidate',
@@ -14,8 +9,9 @@ import {MagicPipConvert} from "../../questions/MagicPipConvert";
     description: 'Candidate returns candidate’s info by provided public key',
 })
 export class CandidateCommand extends CommandRunner {
+    private skip_pip2bip = false;
 
-    constructor() {
+    constructor(private contentExporter: ContentExporter) {
         super();
     }
 
@@ -36,28 +32,14 @@ export class CandidateCommand extends CommandRunner {
 
         minterApi.api().getCandidateGrpc(candidate, options.not_show_stakes, options.height).then((r) => {
                 const result = r.toObject()
-                let out: any;
-                // const mpc = new MagicPipConvert()
-                if (options.patches) {
-                    new JsonPatches().printPropertyNames(result)
-                } else if (options.patch && options.patch.length > 0) {
-                    // out=result[options.patch]
-                    out = search(result, options.patch)
-                } else {
-                    out = result
-                }
-                out = new MagicPipConvert().replaceLongNumericStrings(out)
-                if (!options.pretty) {
-                    process.stdout.write(JSON.stringify(out));
-                } else {
-                    console.warn((out))
-                    // console.warn(out)
-                }
+                this.contentExporter.print(result, this.skip_pip2bip, options)
             }
         )
             .catch(console.log);
         return Promise.resolve(undefined);
     }
+
+
 
     @Option({
         flags: '--height [number]',
@@ -114,4 +96,16 @@ export class CandidateCommand extends CommandRunner {
     parsePretty(val: string): boolean {
         return JSON.parse(val);
     }
+
+    @Option({
+        flags: '--skip_pip2bip',
+        name: 'skip_pip2bip',
+        description: 'Skip convert PIP to BIP',
+        defaultValue: false,
+    })
+    parseSkipPip2Bip(val: string): boolean {
+        this.skip_pip2bip = true;
+        return JSON.parse(val);
+    }
+
 }
