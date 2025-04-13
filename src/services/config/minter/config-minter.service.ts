@@ -3,16 +3,16 @@ import YamlMinter from './YamlMinter';
 import MinterType from './MinterType';
 import { ConfigConst } from '../ConfigConst';
 import { ConfigYamlLoader } from '../ConfigYamlLoader';
-import WalletType from "./WalletType";
-import YamlWallet from "./YamlWallet";
+import WalletType from './WalletType';
+import YamlWallet from './YamlWallet';
 
 @Injectable()
 export class ConfigMinterService extends ConfigYamlLoader {
   private readonly yamlContent: Record<string, any>;
 
   constructor(
-      yaml_file: string = ConfigConst.DEFAULT_CONFIG_FILE,
-      _yamlContent: Record<string, any> | null = null,
+    yaml_file: string = ConfigConst.DEFAULT_CONFIG_FILE,
+    _yamlContent: Record<string, any> | null = null,
   ) {
     super();
     let tmpYamlContent: Record<string, any> | null = null;
@@ -22,17 +22,17 @@ export class ConfigMinterService extends ConfigYamlLoader {
       tmpYamlContent = this.load(yaml_file);
     }
     if (tmpYamlContent != null) {
-        this.yamlContent = tmpYamlContent;
+      this.yamlContent = tmpYamlContent;
     } else {
-        console.error('Not loaded yaml file');
-        throw new Error('Not loaded yaml file');
+      console.error('Not loaded yaml file');
+      throw new Error('Not loaded yaml file');
     }
   }
 
   minter(path: string = ConfigConst.MINTER_PATCH): MinterType {
-      return YamlMinter(this.yamlContent[path]);
+    return YamlMinter(this.yamlContent[path]);
   }
   wallet(path: string = ConfigConst.WALLET_PATCH): WalletType {
-      return YamlWallet(this.yamlContent[path]);
+    return YamlWallet(this.yamlContent[path]);
   }
 }
