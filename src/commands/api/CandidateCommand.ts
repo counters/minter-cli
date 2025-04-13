@@ -3,6 +3,8 @@ import {MinterApiService} from '../../services/minter-api/minter-api.service';
 import {JsonPatches} from "../../utils/JsonPatches";
 
 import {search} from 'jmespath'
+import {MagicPipConvert} from "../../questions/MagicPipConvert";
+
 // import * as jmespath from 'jmespath'
 
 @SubCommand({
@@ -19,7 +21,14 @@ export class CandidateCommand extends CommandRunner {
 
     async run(
         inputs: string[],
-        options: { height?: number; not_show_stakes?: boolean; config: string; patch?: string; patches: boolean; pretty: boolean },
+        options: {
+            height?: number;
+            not_show_stakes?: boolean;
+            config: string;
+            patch?: string;
+            patches: boolean;
+            pretty: boolean
+        },
     ): Promise<void> {
         // const {patch, config} = options;
         const candidate = inputs[0];
@@ -27,19 +36,23 @@ export class CandidateCommand extends CommandRunner {
 
         minterApi.api().getCandidateGrpc(candidate, options.not_show_stakes, options.height).then((r) => {
                 const result = r.toObject()
-            let out: any;
+                let out: any;
+                // const mpc = new MagicPipConvert()
                 if (options.patches) {
                     new JsonPatches().printPropertyNames(result)
                 } else if (options.patch && options.patch.length > 0) {
                     // out=result[options.patch]
-                    out=search(result,options.patch)
+                    out = search(result, options.patch)
                 } else {
-                    out=result
+                    out = result
                 }
-            if (!options.pretty)
-                process.stdout.write(JSON.stringify(out));
-            else
-                console.warn(out)
+                out = new MagicPipConvert().replaceLongNumericStrings(out)
+                if (!options.pretty) {
+                    process.stdout.write(JSON.stringify(out));
+                } else {
+                    console.warn((out))
+                    // console.warn(out)
+                }
             }
         )
             .catch(console.log);
@@ -92,6 +105,7 @@ export class CandidateCommand extends CommandRunner {
     parsePatches(val: string): boolean {
         return JSON.parse(val);
     }
+
     @Option({
         flags: '--pretty [boolean]',
         description: 'Pretty',
