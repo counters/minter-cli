@@ -1,6 +1,6 @@
 {
   "name": "minter-cli",
-  "version": "0.1.4",
+  "version": "0.1.5",
   "description": "Minter CLI",
   "author": "webcounters (https://github.com/counters)",
   "private": false,

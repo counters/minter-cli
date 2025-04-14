@@ -89,8 +89,8 @@ export class WalletSetCandidateCommand extends CommandRunner {
                 this.contentExporter.print(r, false, options);
             })
             .catch((e) => {
-                // console.error(e);
-                this.contentExporter.print(e, false, options);
+                console.error(e);
+                // this.contentExporter.print(e, false, options);
             });
         return Promise.resolve(undefined);
     }

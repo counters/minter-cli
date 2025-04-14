@@ -24,6 +24,9 @@ export class ContentExporter {
     }
     if (!skip_pip2bip) out = new MagicPipConvert().mbPipToBip(out);
     if (!options.pretty) {
+        if (typeof out === 'string')
+            process.stdout.write(out);
+            else
       process.stdout.write(JSON.stringify(out));
     } else {
       console.info(out);
