@@ -1,5 +1,5 @@
 import { ConfigMinterService } from '../config/minter/config-minter.service';
-import MinterApi, { GrpcOptions, HttpOptions } from 'minter-typescript-sdk';
+import MinterApi from 'minter-typescript-sdk';
 import { GetMinterApi } from './GetMinterApi';
 import { ConfigConst } from '../config/ConfigConst';
 

@@ -54,10 +54,10 @@ export class AddressCommand extends CommandRunner {
   @Option({
     flags: '-d, --delegated [boolean]',
     description:
-      'delegated',
+      'Delegated',
     defaultValue: false,
   })
-  parseBoolean(val: string): boolean {
+  parseDelegated(val: string): boolean {
     return JSON.parse(val);
   }
 
