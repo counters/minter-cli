@@ -33,8 +33,7 @@ export class AddressCommand extends CommandRunner {
     minterApi
       .api()
       .getAddressGrpc(candidate, options.delegated, options.height)
-      .then((r) => {
-        const result = r.toObject();
+      .then((result) => {
         this.contentExporter.print(result, this.skipPip2Bip, options);
       })
       .catch(console.log);

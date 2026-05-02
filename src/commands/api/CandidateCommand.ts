@@ -33,8 +33,7 @@ export class CandidateCommand extends CommandRunner {
     minterApi
       .api()
       .getCandidateGrpc(candidate, options.not_show_stakes, options.height)
-      .then((r) => {
-        const result = r.toObject();
+      .then((result) => {
         this.contentExporter.print(result, this.skipPip2Bip, options);
       })
       .catch(console.log);

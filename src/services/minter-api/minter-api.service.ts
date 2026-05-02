@@ -27,8 +27,7 @@ export class MinterApiService extends GetMinterApi {
     // console.log('MinterApiService candidate');
     this.minterApi
       .getCandidateGrpc(candidate, notShowStakes, height)
-      .then((r) => {
-        const result = r.toObject();
+      .then((result) => {
         // console.log(r.toObject())
         const param = 'status';
         console.warn(result[param]);
