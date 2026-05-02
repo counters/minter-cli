@@ -1,6 +1,6 @@
 {
   "name": "minter-cli",
-  "version": "0.1.6",
+  "version": "0.1.7",
   "description": "Minter CLI",
   "author": "webcounters (https://github.com/counters)",
   "private": false,
@@ -46,7 +46,7 @@
     "jmespath": "^0.16.0",
     "js-yaml": "4.1.1",
     "minter-js-sdk": "^0.46.2",
-    "minter-typescript-sdk": "^1.2.0",
+    "minter-typescript-sdk": "^1.2.1",
     "minterjs-wallet": "^6.2.0",
     "nest-commander": "^3.17.0",
     "reflect-metadata": "^0.2.2",
