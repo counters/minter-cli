@@ -5,17 +5,11 @@ import {
   SubCommand,
 } from 'nest-commander';
 import { Minter, TX_TYPE } from 'minter-js-sdk';
-import {
-  getPrivateKeyFromSeedPhraseAsync,
-  getPrivateKeyFromSeedPhrase,
-  getBaseCoinSymbol,
-} from 'minter-js-sdk/src/utils';
 import { ConfigMinterService } from '../../services/config/minter/config-minter.service';
 import { parseNumber } from '../../utils/parseNumber';
 import { Wallet } from '../../core/Wallet';
 import {
   CANCEL_MESSAGE,
-  ConfirmQuestion,
 } from '../../questions/ConfirmQuestion';
 
 @SubCommand({

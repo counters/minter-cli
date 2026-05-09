@@ -9,7 +9,6 @@ import { ConfigMinterService } from '../../services/config/minter/config-minter.
 import { Wallet } from '../../core/Wallet';
 import {
   CANCEL_MESSAGE,
-  ConfirmQuestion,
 } from '../../questions/ConfirmQuestion';
 import { ContentExporter } from '../../services/ContentExporter';
 
