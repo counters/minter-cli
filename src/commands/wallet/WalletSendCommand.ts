@@ -4,10 +4,7 @@ import {
   Option,
   SubCommand,
 } from 'nest-commander';
-import {
-  Minter,
-  TX_TYPE,
-} from 'minter-js-sdk';
+import { Minter, TX_TYPE } from 'minter-js-sdk';
 import {
   getPrivateKeyFromSeedPhraseAsync,
   getPrivateKeyFromSeedPhrase,

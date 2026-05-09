@@ -6,7 +6,8 @@ import { ContentExporter } from '../../services/ContentExporter';
   name: 'address',
   arguments: '<address>',
   argsDescription: { public_key: 'address: Mx...' },
-  description: 'Address returns coins list, balance and transaction count of an address',
+  description:
+    'Address returns coins list, balance and transaction count of an address',
 })
 export class AddressCommand extends CommandRunner {
   private skipPip2Bip = false;
@@ -19,7 +20,7 @@ export class AddressCommand extends CommandRunner {
     inputs: string[],
     options: {
       height?: number;
-        delegated?: boolean;
+      delegated?: boolean;
       config: string;
       patch?: string;
       patches: boolean;
@@ -52,8 +53,7 @@ export class AddressCommand extends CommandRunner {
 
   @Option({
     flags: '-d, --delegated [boolean]',
-    description:
-      'Delegated',
+    description: 'Delegated',
     defaultValue: false,
   })
   parseDelegated(val: string): boolean {

@@ -1,7 +1,7 @@
 import { Command, CommandRunner } from 'nest-commander';
 import { CandidateCommand } from './CandidateCommand';
-import {AddressCommand} from "./AddressCommand";
-import {WalletSetCandidateCommand} from "../wallet/WalletSetCandidateCommand";
+import { AddressCommand } from './AddressCommand';
+import { WalletSetCandidateCommand } from '../wallet/WalletSetCandidateCommand';
 
 @Command({
   name: 'api',
