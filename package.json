@@ -45,9 +45,9 @@
     "inquirer": "^12.5.2",
     "jmespath": "^0.16.0",
     "js-yaml": "4.1.1",
-    "minter-js-sdk": "^0.0.3",
+    "minter-js-sdk": "^0.46.2",
     "minter-typescript-sdk": "^1.2.1",
-    "minterjs-wallet": "^4.0.4",
+    "minterjs-wallet": "^6.2.0",
     "nest-commander": "^3.17.0",
     "reflect-metadata": "^0.2.2",
     "rxjs": "^7.8.1"
