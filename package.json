@@ -1,16 +1,16 @@
 {
   "name": "minter-cli",
-  "version": "0.1.9",
+  "version": "0.1.10",
   "description": "Minter CLI",
   "author": "webcounters (https://github.com/counters)",
   "private": false,
   "license": "Apache-2.0",
   "bin": {
-    "minter-cli": "./dist/main.js"
+    "minter-cli": "dist/main.js"
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/counters/minter-cli.git"
+    "url": "git+https://github.com/counters/minter-cli.git"
   },
   "scripts": {
     "build": "nest build",
@@ -44,9 +44,9 @@
     "@nestjs/platform-express": "^11.0.1",
     "inquirer": "^12.5.2",
     "jmespath": "^0.16.0",
-    "js-yaml": "4.1.1",
+    "js-yaml": "^5.4.1",
     "minter-js-sdk": "^0.46.2",
-    "minter-typescript-sdk": "^1.2.1",
+    "minter-typescript-sdk": "^1.2.4",
     "minterjs-wallet": "^6.2.0",
     "nest-commander": "^3.17.0",
     "reflect-metadata": "^0.2.2",
